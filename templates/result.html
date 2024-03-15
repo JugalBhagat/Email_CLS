@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Classified Emails</title>
+    <style>
+        /* Reset some default browser styles */
+        body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, sans-serif;
+  background-color: #f4f4f4;
+  margin: 10px;
+  padding: 0;
+  background-image: url('bg_img.png'); /* Use just the image filename if it's in the same directory */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 2px solid red;
+}
+
+        /* Style the main container */
+        .container {
+            width: 100%; /* Set container width to 75% of the screen */
+            max-width: 100%; /* Ensure the container doesn't exceed the screen width */
+            margin: 0 auto;
+            padding: 20px;
+            overflow: hidden; /* Hide horizontal overflow */
+        }
+
+        /* Define a style for the tables */
+        table {
+            width: 100%; /* Tables take full width of their container */
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            border: 1px solid #ddd; /* Add border to tables */
+        }
+
+        /* Define a style for table headers */
+        th {
+            background-color: #040366; /* Header background color */
+            color: #fff; /* Header text color */
+            padding: 8px;
+            text-transform:capitalize;
+            text-align: left;
+            border: 1px solid #ddd; /* Add border to headers */
+            font-size: 1.4rem; /* Font size 1.4 times normal */
+        }
+
+        /* Define a style for table cells */
+        td {
+            padding: 8px;
+            text-align: left;
+            border: 1px solid #a8a8a8; /* Add border to cells */
+        }
+
+        /* Define a style for the table captions */
+        caption {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 30px;
+            position:relative; /* Make the captions sticky */
+            top: 0; /* Stick to the top of the container */
+            
+            width: 100%; /* Set width to 100% */
+            /* Remove background color for captions */
+        }
+
+        /* Define a style for the container div with scrollbar */
+        .scroll-container {
+            max-height: 275px; /* Limit the height of the scroll container */
+            overflow-y: auto; /* Add vertical scrollbar if needed */
+            width: 75%;  
+            margin: 0 auto; /* Center the scroll container horizontally */
+            border: 1px solid #ccc;
+        }
+
+        /* Add a background color and white text to the first row (index row) */
+        tr:first-child {
+            background-color: #040366;
+            color: #fff;
+        }
+
+        /* Add background color to the main title */
+        h1 {
+      text-align:center;
+      text-transform:uppercase;
+      font-size:26px; letter-spacing:1px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      grid-template-rows: 16px 0;
+      grid-gap: 22px;
+      
+    }
+
+    h1:after,h1:before {
+      content: " ";
+      display: block;
+      border-bottom: 2px solid #ccc;
+      margin-right: 20px;
+      background-color:#f8f8f8;
+    }
+
+
+        /* Set background color for index, text, and label cells to blue */
+        .blue-bg {
+            background-color: #040366;
+            color: #fff;
+        }
+        h2{
+            text-align: center;
+            align-self: center;
+              
+        }
+        p{
+            font-size: 20px;
+            font-weight: bold;
+            font-family:Verdana, sans-serif;
+            text-transform:capitalize;
+        }
+        /* Style for buttons */
+        .button-container {
+            text-align: right;
+            margin-right: 12.5%;
+            margin-top: 20px;
+        }
+
+        .button {
+            background-color: #040366;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .button:hover {
+          background-color: #fff;
+          color: #040366;
+          border:1px solid #040366;
+        }
+        .sh
+        {
+            
+            margin-right: 40px;
+        }
+        .imgg
+        {
+            width: 200px;
+            height: 200px;
+            background-image: url("clean_gif.gif");
+            position: absolute;
+            top: 100px;
+            right: 200px;
+        }
+    </style>
+    <script>
+        function download_ham() {
+          // Replace with the actual local file path
+          window.location.href = '/page2?file=ham_email';
+        }
+        function download_spam() {
+          // Replace with the actual local file path
+          window.location.href = '/page2?file=spam_email';
+        }
+    </script>
+
+</head>
+
+<body>
+    <div class="container">
+        <h1>Classified Datasets</h1>
+        <br/>
+        <p>Selected model : {{ model }}</p>
+        <!-- <p>{{ csvfile }}</p> -->
+        <br/>
+        <br/>
+        <!-- Display ds_ham in a table with scrollbar -->
+        <div class="sh"><caption><h2>Ham Dataset</h2></caption></div>
+        <div class="scroll-container" >
+            <table>
+                <!-- <caption>Ham Dataset</caption> -->
+                <tr>
+                    {% for col in ds_ham.columns %}
+                        <th class="blue-bg">{{ col }}</th>
+                    {% endfor %}
+                </tr>
+                {% for row in ds_ham.iterrows() %}
+                    <tr>
+                        {% for val in row[1] %}
+                            <td>{{ val }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <!-- Add a button for Ham Dataset -->
+        <div class="button-container">
+            <button class="button" id="btn-download-ham" onclick="download_ham()">Download ham Emails</button>
+            <!-- <a href="E:\Deep_learning\Email_CLS\ham_email.csv" download>View Ham Dataset</a> -->
+        </div>
+        <br/>
+        <br/>
+        <!-- Display ds_spam in a table with scrollbar -->
+        <div class="sh"><caption><h2>Spam Dataset</h2></caption></div>
+        <div class="scroll-container">
+            <table>
+                <!-- <caption>Spam Dataset</caption> -->
+                <tr>
+                    {% for col in ds_spam.columns %}
+                        <th class="blue-bg">{{ col }}</th>
+                    {% endfor %}
+                </tr>
+                {% for row in ds_spam.iterrows() %}
+                    <tr>
+                        {% for val in row[1] %}
+                            <td>{{ val }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        
+        <!-- Add a button for Spam Dataset -->
+        <div class="button-container">
+            <button class="button" id="btn-download-spam" onclick="download_spam()">Download Spam Emails</button>
+        </div>
+        <br/>
+        <br/>
+    </div>
+    
+</body>
+
+</html>

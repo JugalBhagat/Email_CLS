@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Email Classifier</title>
+
+  <style>
+    /* CSS styles for the entire page background-color: #f4f4f4;*/
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, sans-serif;
+      background-color: #f4f4f4;
+      margin: 10px;
+      padding: 0;
+      background-image: url('bg_img.png'); /* Use just the image filename if it's in the same directory */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      height: 100%;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
+    /* CSS styles for the header */
+    h7 {
+      background-color: #333; /* Header background color */
+      color: #fff; /* Header text color */
+      padding: 10px; /* Header padding */
+      margin: 0; /* Remove header margin */
+    }
+
+    /* Style 8 */
+    h1 {
+      text-align: center;
+      text-transform: uppercase;
+      font-size: 26px;
+      letter-spacing: 1px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      grid-template-rows: 16px 0;
+      grid-gap: 22px;
+    }
+
+    h1:after,
+    h1:before {
+      content: " ";
+      display: block;
+      border-bottom: 2px solid #ccc;
+      background-color: #f8f8f8;
+    }
+
+    /* CSS styles for the CSV viewer */
+    #csv_data {
+      max-height: 200px; /* Limit the height to 200px */
+      overflow-y: scroll; /* Add a vertical scrollbar */
+      border: 1px solid #ccc; /* Add a border for clarity */
+      padding: 10px; /* Add some padding for better readability */
+      background-color: #fff; /* Background color for the viewer */
+      margin-top: 40px; /* Add margin from the top */
+      margin-left: 40px;
+      margin-right: 40px;
+    }
+
+    .csv-row {
+      display: flex; /* Use flexbox to create a horizontal layout */
+      border-bottom: 1px solid #ccc; /* Draw a line below each row */
+      margin-bottom: 5px; /* Add margin between rows */
+    }
+
+    .csv-cell {
+      flex: 1; /* Distribute space equally among cells */
+      padding: 5px; /* Add padding within cells */
+      border-right: 1px solid #ccc; /* Draw a line between columns */
+    }
+
+    .column-separator {
+      width: 1px; /* Width of the separator */
+      background-color: #ccc; /* Separator color */
+      margin: 0 5px; /* Margin between the separator and columns */
+    }
+
+    /* CSS styles for the custom upload button */
+    .custom-upload-button {
+      background-color: #040366; /* Button background color */
+      color: #fff; /* Button text color */
+      padding: 10px 20px; /* Button padding */
+      border: none; /* Remove button border */
+      border-radius: 5px; /* Button border radius */
+      margin-left: 40px;
+      cursor: pointer; /* Change cursor to pointer on hover */
+      margin-top: 0px; /* Remove top margin */
+    }
+
+    .custom-upload-button:hover {
+      background-color: #fff;
+      color: #040366;
+      border: 1px solid #040366; /* Button background color on hover */
+    }
+
+    /* CSS styles for the model selection dropdown */
+    #model_select {
+      margin-top: 10px; /* Add margin to separate from the title */
+    }
+
+    /* CSS styles to hide the real file input */
+    #real_file_input {
+      display: none;
+    }
+
+    /* Custom styles for label and radio buttons */
+    .column-label {
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    .radio-button {
+      margin-right: 10px;
+    }
+
+    /* CSS styles for the merge button */
+    #merge_button {
+      background-color: #040366;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+      margin-left: 40px;
+    }
+
+    #merge_button:hover {
+      background-color: #fff;
+      color: #040366;
+      border: 1px solid #040366;
+    }
+
+    /* CSS styles for the top-right button */
+    .top-right-button {
+      position: relative;
+      top: 20px;
+      left: 1400px;
+      background-color: #040366;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-right: 40px;
+    }
+
+    .top-right-button:hover {
+      background-color: #fff;
+      color: #040366;
+      border: 1px solid #040366;
+    }
+
+    .model_name {
+      margin-left: 40px;
+    }
+
+    .title_con {
+      background-color: #f4f4f4;
+      height: 20%;
+      width: 100%;
+    }
+
+    /* CSS styles for the links */
+    .bottom-links {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      color: #040366;
+    }
+
+    .bottom-links a {
+      text-decoration: none;
+      margin-right: 10px;
+      color: #040366;
+      margin-left: 30px;
+      margin-bottom: 20px;
+    }
+    .dy_input{
+       height: 25px;
+       border-radius: 5px; 
+    }
+    /* .div_dy_input
+    {
+        margin-left: 40px;
+        margin-top: 40px;
+        height: 200px;
+        border-radius: 5px;
+        overflow-y: scroll;
+        border: #040366;
+    }    */
+    .div_dy_input{
+      max-height: 180px; /* Limit the height to 200px */
+      overflow-y: scroll; /* Add a vertical scrollbar */
+      border: 1px solid #fd0101; /* Add a border for clarity */
+      padding: 10px; /* Add some padding for better readability */
+      background-color: #fff; /* Background color for the viewer */
+      margin-top: 10px; /* Add margin from the top */
+      margin-left: 40px;
+      margin-right: 40px;
+    }
+    .finish
+    {
+        margin-left: 100px;
+    }
+    .pp
+    {
+      margin-left: 40px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="title_con">
+    <h1 align="center">Data Preprocessing</h1>
+  </div>
+
+  <!-- Model selection dropdown -->
+  <form action="/preprocess" method="POST" enctype="multipart/form-data">
+    <!-- Custom upload button and hidden real file input -->
+    <table>
+      <tr>
+        <td><label for="real_file_input" class="custom-upload-button">Upload CSV file</label></td>
+        <td><div id="file-name-display"></div></td>
+      </tr>
+    </table>
+
+    <input type="file" id="real_file_input" name="csvfile" accept=".csv" required>
+    <!-- Add margin to separate from the title -->
+    <div id="csv_data" style="margin-top: 40px;"></div>
+
+    <!-- Display the uploaded file name -->
+
+    <!-- <button class="top-right-button" onclick="classify()">Classify</button> -->
+<!-- Input field with a + button -->
+
+  <p class="pp">select column that contains any part of Email (Relevent data) </p>
+    <div id="inputFields" class="div_dy_input">
+        
+        <input type="text" name="additionalColumn" class="dy_input" placeholder="Additional Column" required>
+        <button type="button" class="add-input-button" class="dy_input"  onclick="addInputField()">
+        +
+        </button>
+            <button class="Finish" id="merge_button">Finish</button><br/><br/>
+        
+    </div>
+    
+  </form>
+
+  <div class="bottom-links">
+    <a href="http://127.0.0.1:8000/">Home</a>
+    <a href="https://github.com/JugalBhagat/Email_CLS.git">Source Code</a>
+    <a href="http://127.0.0.1:5000/">Download Model</a>
+    <a href="http://127.0.0.1:8000/api_use">How to use this API</a>
+  </div>
+
+  
+  <script>
+    var realFileInput = document.getElementById("real_file_input");
+    var dataContainer = document.getElementById("csv_data");
+    var fileNameDisplay = document.getElementById("file-name-display");
+  
+    realFileInput.addEventListener("change", function() {
+      dataContainer.innerHTML = "";
+      fileNameDisplay.innerHTML = "";
+  
+      var selectedFile = realFileInput.files[0];
+  
+      if (selectedFile) {
+        fileNameDisplay.innerHTML = "Selected File: " + selectedFile.name;
+  
+        readCSV(selectedFile, function(csvData) {
+          dataContainer.innerHTML = csvData;
+        });
+      } else {
+        alert("Please select a CSV file.");
+      }
+    });
+  
+    function readCSV(file, callback) {
+      var data = [];
+  
+      var reader = new FileReader();
+      reader.onload = function() {
+        var rows = reader.result.split("\n");
+  
+        for (var i = 0; i < rows.length; i++) {
+          var row = rows[i].split(",");
+          data.push(row);
+        }
+  
+        callback(formatCSV(data));
+      };
+      reader.readAsText(file);
+    }
+  
+    function formatCSV(data) {
+      var html = "";
+      for (var i = 0; i < data.length; i++) {
+        var row = data[i];
+        html += '<div class="csv-row">';
+        for (var j = 0; j < row.length; j++) {
+          var cell = row[j];
+          html += '<div class="csv-cell">' + cell + '</div>';
+        }
+        html += '</div>';
+      }
+      return html;
+    }
+  
+    function classify() {
+      // Add your classify function logic here
+      // ...
+    }
+    function addInputField() {
+      var inputFields = document.getElementById("inputFields");
+      var newInputField = document.createElement("div");
+      newInputField.innerHTML = `
+        <input type="text" name="additionalColumn" class="dy_input" placeholder="Additional Column"><br/>
+        <br/>
+      `;
+      inputFields.appendChild(newInputField);
+
+    }
+  </script>
+
+</body>
+</html>

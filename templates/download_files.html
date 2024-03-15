@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <script>
+            function download()
+            {
+                const queryParams = new URLSearchParams(window.location.search);
+                const fileValue = queryParams.get('file');
+                let desiredFileName = '';
+
+                if (fileValue === 'ham_email') {
+                    desiredFileName = 'ham_email.csv'; // Replace with the actual ham email file name
+                } else if (fileValue === 'spam_email') {
+                    desiredFileName = 'spam_email.csv'; // Replace with the actual spam email file name
+                } else {
+                    console.error('Invalid or missing "file" parameter in the URL.');
+                }
+                if (desiredFileName) {
+                    const downloadLink = document.createElement('a');
+                    downloadLink.href = `file:/../${desiredFileName}`; // Replace with the actual file path
+                    downloadLink.download = desiredFileName;
+                    downloadLink.click();
+                    downloadLink.remove();
+                }
+            }
+
+        </script>
+    </head>
+    <body>
+        <a href="../ham_email.csv" download>Download Excel File</a>
+        <button onclick="download()">Download</button>
+    </body>
+</html>

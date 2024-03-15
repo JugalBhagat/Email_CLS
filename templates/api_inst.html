@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>How to Use API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align:center;
+            text-transform:uppercase;
+            font-size:26px; 
+            letter-spacing:1px;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            grid-template-rows: 16px 0;
+            grid-gap: 22px;
+        }
+
+        h1:after,h1:before {
+            content: " ";
+            display: block;
+            border-bottom: 2px solid #ccc;
+            background-color:#f8f8f8;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            font-family: 'Segoe UI';
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>How to Use API</h1>
+    </header>
+    <div class="container">
+        <h2>Introduction</h2>
+        <p>
+            This HTML page provides an example of how to use an email classification model API in your web applications.
+        </p>
+
+        <h2>Steps to Use Email Classification Model</h2>
+        <ol>
+            <li>Load the trained classification model.</li><br/>
+            <li>Load and prepare your dataset with columns: "index" and "body".</li><br/>
+            <li>Perform data preprocessing on the "body" column, including text cleaning and formatting.</li><br/>
+            <li>Extract features from the email text, e.g., using TF-IDF or word embeddings.</li><br/>
+            <li>Use the model to predict whether each email is "ham" or "spam".</li><br/>
+            <li>(Optional) Evaluate the model's performance with metrics like accuracy, precision, recall, and F1-score.</li><br/>
+            <li>Use the predicted labels for sorting emails, flagging suspicious ones, or other purposes.</li><br/>
+            <li>(Optional) Implement further actions based on the model's predictions, e.g., automated responses or filters.</li><br/>
+            <li>(Optional) Deploy the model in a live email processing system for real-time classification.</li><br/>
+        </ol>
+
+        <h2>Conclusion</h2>
+        <p>
+            Please note that the exact implementation details may vary depending on the machine learning framework you used for training, 
+            the format of the pre-trained model, and the specific requirements of your application. 
+            The steps outlined above provide a general guideline for using a pre-trained model for EMail classification.
+        </p>
+    </div>
+</body>
+</html>
